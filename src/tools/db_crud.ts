@@ -1,5 +1,3 @@
-import { randomUUID } from 'node:crypto';
-
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { createClient, FunctionRegion, type SupabaseClient } from '@supabase/supabase-js';
 import {
@@ -58,7 +56,7 @@ const toolParamsSchema = {
   operation: z
     .enum(['select', 'insert', 'update', 'delete'])
     .describe(
-      'CRUD operation to perform: select optionally accepts limit/id/version/filters, insert requires jsonOrdered (id auto-generated), update requires id/version/jsonOrdered, delete requires id/version.',
+      'CRUD operation to perform: select optionally accepts limit/id/version/filters, insert requires id/jsonOrdered, update requires id/version/jsonOrdered, delete requires id/version.',
     ),
   table: tableSchema.describe(
     'Target table for the operation; must be one of contacts, flows, lifecyclemodels, processes, or sources.',
@@ -74,7 +72,7 @@ const toolParamsSchema = {
     .uuid()
     .optional()
     .describe(
-      'UUID string stored in the `id` column (required for update/delete, optional filter for select).',
+      'UUID string stored in the `id` column (required for insert/update/delete, optional filter for select).',
     ),
   version: z
     .string()
@@ -106,6 +104,13 @@ const refinedInputSchema = z
             code: z.ZodIssueCode.custom,
             message: 'jsonOrdered is required for insert operations.',
             path: ['jsonOrdered'],
+          });
+        }
+        if (data.id === undefined) {
+          ctx.addIssue({
+            code: z.ZodIssueCode.custom,
+            message: 'id is required for insert operations.',
+            path: ['id'],
           });
         }
         break;
@@ -312,20 +317,23 @@ async function handleSelect(supabase: SupabaseClient, input: SelectInput): Promi
 }
 
 async function handleInsert(supabase: SupabaseClient, input: InsertInput): Promise<string> {
-  const { table, jsonOrdered } = input;
+  const { table, jsonOrdered, id } = input;
 
   if (jsonOrdered === undefined) {
     throw new Error('jsonOrdered is required for insert operations.');
   }
 
+  if (id === undefined) {
+    throw new Error('id is required for insert operations.');
+  }
+
   // Validate jsonOrdered before inserting
   validateJsonOrdered(table, jsonOrdered);
 
-  const newId = randomUUID();
   const keyColumn = getPrimaryKeyColumn(table);
   const { data, error } = await supabase
     .from(table)
-    .insert([{ [keyColumn]: newId, json_ordered: jsonOrdered }])
+    .insert([{ [keyColumn]: id, json_ordered: jsonOrdered }])
     .select();
 
   if (error) {
@@ -333,7 +341,7 @@ async function handleInsert(supabase: SupabaseClient, input: InsertInput): Promi
     throw error;
   }
 
-  return JSON.stringify({ id: newId, data: data ?? [] });
+  return JSON.stringify({ id, data: data ?? [] });
 }
 
 async function handleUpdate(
