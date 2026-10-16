@@ -44,8 +44,8 @@ checkPaths:
   - scripts/docpact-gate.sh
   - scripts/install-git-hooks.sh
 lastReviewedAt: 2026-10-16
-lastReviewedCommit: e90d0eaff0799a3a8a4925ed80ebe9ec0b8cff0b
-lastReviewedNote: 'MCP #85: qualified SDK 1.32.1 and development-only Inspector 2.11.0 plus bounded vulnerable transitive refreshes; Node 24, TS7, exact package pins, transport/auth behavior, audit threshold, install policy and release/image boundaries remain intact.'
+lastReviewedCommit: 2cac631232e50bd3a982509c7d4f15dca7ada4c8
+lastReviewedNote: 'MCP #84 rebased onto qualified #85: bounded monitoring and narrow lock maintenance preserve SDK 1.32.1, development Inspector 2.11.0, audit/transport guards and exact runtime/install contracts; Docker qualification stays separate under #86.'
 related:
   - .docpact/config.yaml
   - docs/agents/repo-validation.md
@@ -116,7 +116,7 @@ Route those tasks to:
 - SDK validation uses `validateEnhanced()` exactly once per entity and consumes normalized `validationIssues`. Insert/update prepares and validates once before transport. Reads use actor-bound PostgREST; ordinary create/save/delete uses `app_dataset_create`, `app_dataset_save_draft`, and `app_dataset_delete` (`DB-CORE-WRITE-01`), while LifecycleModels use `save_lifecycle_model_bundle` and `delete_lifecycle_model_bundle` (`EDGE-BUNDLE-01`). No MCP write uses raw table DML. Strict-invalid LifecycleModels therefore perform zero auth/REST/process-lookup requests and can never reach a write; their stable error envelope exposes normalized code/path/severity without raw Zod parsing.
 - `pnpm prepush:gate` is the canonical gate. It also proves the packed runtime consumer, a clean arbitrary-path worktree, build, audit, and pack contract.
 - Nested package tests resolve and verify the exact native `pnpm`/`pnpm.exe` executable first with `shell: false`; Corepack JavaScript is only a fallback. Do not assume `COREPACK_ROOT` exists in `pnpm/setup` runners.
-- `.github/workflows/quality-gate.yml` runs the canonical gate on Linux x64, Windows x64, macOS arm64, and Linux arm64.
+- `.github/workflows/quality-gate.yml` runs the canonical gate on Linux x64, Windows x64, macOS arm64, and Linux arm64. Dependency proposals reuse these checks; monitoring and manual intake boundaries are documented in `docs/agents/dependency-maintenance.md`. Docker monitoring remains inactive until its image-validation prerequisite is qualified.
 - Published binaries:
   - `tiangong-lca-mcp-stdio`
   - `tiangong-lca-mcp-http`

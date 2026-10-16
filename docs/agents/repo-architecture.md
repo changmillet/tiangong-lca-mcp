@@ -34,8 +34,8 @@ checkPaths:
   - scripts/docpact-gate.sh
   - scripts/install-git-hooks.sh
 lastReviewedAt: 2026-10-16
-lastReviewedCommit: e90d0eaff0799a3a8a4925ed80ebe9ec0b8cff0b
-lastReviewedNote: 'MCP #85: qualified SDK 1.32.1 and development-only Inspector 2.11.0 plus bounded vulnerable transitive refreshes; Node 24, TS7, exact package pins, transport/auth behavior, audit threshold, install policy and release/image boundaries remain intact.'
+lastReviewedCommit: 2cac631232e50bd3a982509c7d4f15dca7ada4c8
+lastReviewedNote: 'MCP #84 rebased onto qualified #85: bounded monitoring and narrow lock maintenance preserve SDK 1.32.1, development Inspector 2.11.0, audit/transport guards and exact runtime/install contracts; Docker qualification stays separate under #86.'
 related:
   - ../../AGENTS.md
   - ../../.docpact/config.yaml

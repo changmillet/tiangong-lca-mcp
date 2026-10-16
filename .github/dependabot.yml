@@ -1,0 +1,39 @@
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+      time: '04:00'
+      timezone: Asia/Shanghai
+    cooldown:
+      default-days: 7
+    open-pull-requests-limit: 2
+    groups:
+      mcp-transport:
+        patterns: ['@modelcontextprotocol/*', react-dom]
+        update-types: [minor, patch]
+      supabase:
+        patterns: ['@supabase/*']
+        update-types: [minor, patch]
+      oxlint:
+        patterns: [oxlint, oxlint-tsgolint]
+        update-types: [minor, patch]
+      development-tools:
+        dependency-type: development
+        patterns: ['@types/*', prettier, tsx, typescript]
+        update-types: [minor, patch]
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+      time: '04:20'
+      timezone: Asia/Shanghai
+    cooldown:
+      default-days: 7
+    open-pull-requests-limit: 1
+    groups:
+      actions:
+        patterns: ['*']
