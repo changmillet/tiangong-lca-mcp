@@ -39,8 +39,8 @@ checkPaths:
   - scripts/docpact-gate.sh
   - scripts/install-git-hooks.sh
 lastReviewedAt: 2026-10-16
-lastReviewedCommit: e90d0eaff0799a3a8a4925ed80ebe9ec0b8cff0b
-lastReviewedNote: 'MCP #85: qualified SDK 1.32.1 and development-only Inspector 2.11.0 plus bounded vulnerable transitive refreshes; Node 24, TS7, exact package pins, transport/auth behavior, audit threshold, install policy and release/image boundaries remain intact.'
+lastReviewedCommit: 2cac631232e50bd3a982509c7d4f15dca7ada4c8
+lastReviewedNote: 'MCP #84 rebased onto qualified #85: bounded monitoring and narrow lock maintenance preserve SDK 1.32.1, development Inspector 2.11.0, audit/transport guards and exact runtime/install contracts; Docker qualification stays separate under #86.'
 related:
   - ../../AGENTS.md
   - ../../.docpact/config.yaml
@@ -82,6 +82,8 @@ The clean-worktree check resolves the source checkout's store with the verified 
 | release automation under `scripts/ci/**` or `.github/workflows/publish.yml` | inspect the workflow/script diff; `pnpm prepush:gate` | record tag naming, `main` ancestry, and unpublished-version checks | The feature task prepares release-ready artifacts; version/tag/publish remains a separately tracked release action. The release-context decision itself executes against local git fixtures via `test/release-context.test.mjs` (canonical admission, previous-owner/fork rejection, unchanged-version no-release, matching tag release). |
 | `public/**` only | `pnpm build`; `pnpm lint` | confirm no authorization code/token display page became reachable | The directory is packaging-compatible only; remote OAuth protocol endpoints are runtime routes and no static demo is served. |
 | governed docs only | `scripts/docpact validate-config --root . --strict`; `scripts/docpact lint --root . --staged --mode enforce` | run one focused route check such as `transport-auth`, `mcp-tools`, or `openlca-tidas` when routing changes | Refresh review metadata even when prose-only docs change. |
+
+Dependency proposals reuse this existing gate without a new general check. See [dependency maintenance](dependency-maintenance.md) for grouped monitoring, lock-only governance and the unqualified Docker-monitoring prerequisite.
 
 ## Known Caveats
 

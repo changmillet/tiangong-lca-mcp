@@ -1,8 +1,8 @@
 version: 1
 layout: repo
 lastReviewedAt: 2026-10-16
-lastReviewedCommit: e90d0eaff0799a3a8a4925ed80ebe9ec0b8cff0b
-lastReviewedNote: 'MCP #85: qualified SDK 1.32.1 and development-only Inspector 2.11.0 plus bounded vulnerable transitive refreshes; Node 24, TS7, exact package pins, transport/auth behavior, audit threshold, install policy and release/image boundaries remain intact.'
+lastReviewedCommit: 2cac631232e50bd3a982509c7d4f15dca7ada4c8
+lastReviewedNote: 'MCP #84 rebased onto qualified #85: bounded monitoring and narrow lock maintenance preserve SDK 1.32.1, development Inspector 2.11.0, audit/transport guards and exact runtime/install contracts; Docker qualification stays separate under #86.'
 
 catalog:
   repos:
@@ -13,6 +13,7 @@ catalog:
       workflowDocs:
         - docs/agents/repo-validation.md
         - docs/agents/repo-architecture.md
+        - docs/agents/dependency-maintenance.md
         - DEV_EN.md
         - DEV_CN.md
       workspaceIntegrationRequired: true
@@ -30,6 +31,7 @@ ownership:
           - .docpact/config.yaml
           - docs/agents/**
           - .github/workflows/ai-doc-lint.yml
+          - .github/dependabot.yml
       ownerRepo: mcp
     - id: validation-release-and-automation
       paths:
@@ -128,6 +130,7 @@ coverage:
     - .github/workflows/publish.yml
     - .github/workflows/quality-gate.yml
     - .github/workflows/ai-doc-lint.yml
+    - .github/dependabot.yml
   exclude:
     - .git/**
     - .github/scripts/**
@@ -144,6 +147,11 @@ freshness:
 
 routing:
   intents:
+    dependency-maintenance:
+      paths:
+        - .github/dependabot.yml
+        - docs/agents/dependency-maintenance.md
+        - pnpm-lock.yaml
     local-docpact-gate:
       paths:
         - .githooks/pre-push
@@ -263,12 +271,37 @@ docInventory:
     - .docpact/config.yaml
     - docs/agents/repo-validation.md
     - docs/agents/repo-architecture.md
+    - docs/agents/dependency-maintenance.md
 
 repo:
   id: mcp
   owner: mcp
 
 rules:
+  - id: mcp-dependency-monitoring-contract
+    scope: repo
+    repo: mcp
+    triggers:
+      - path: .github/dependabot.yml
+        kind: dependency-monitoring-config
+      - path: docs/agents/dependency-maintenance.md
+        kind: dependency-maintainer-guide
+    requiredDocs:
+      - path: docs/agents/dependency-maintenance.md
+        mode: review_or_update
+    reason: Monitoring cadence, groups, existing validation reuse and deferred image coverage must agree with the focused maintainer guide.
+  - id: mcp-dependency-lock-contract
+    scope: repo
+    repo: mcp
+    triggers:
+      - path: pnpm-lock.yaml
+        kind: dependency-lock
+    requiredDocs:
+      - path: AGENTS.md
+        mode: must_exist
+      - path: docs/agents/dependency-maintenance.md
+        mode: must_exist
+    reason: Lock resolution maintenance retains review guidance without manufactured metadata changes; manifest, source and runtime changes keep their existing semantic review requirements.
   - id: mcp-bootstrap-contract
     scope: repo
     repo: mcp
@@ -334,8 +367,6 @@ rules:
     repo: mcp
     triggers:
       - path: package.json
-        kind: runtime-config
-      - path: pnpm-lock.yaml
         kind: runtime-config
       - path: pnpm-workspace.yaml
         kind: runtime-config
