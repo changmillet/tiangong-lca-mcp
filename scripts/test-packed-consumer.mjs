@@ -171,6 +171,38 @@ try {
   assert.equal(packageJson.name, '@tiangong-lca/mcp-server');
   assert.equal(packageJson.version, '0.2.1');
   assert.equal(packageJson.dependencies['@tiangong-lca/tidas-sdk'], '0.2.0');
+  assert.equal(packageJson.dependencies['@modelcontextprotocol/sdk'], '1.32.1');
+  const productionTree = JSON.parse(
+    runPnpm(['list', '--prod', '--depth', 'Infinity', '--json'], {
+      cwd: temporaryRoot,
+      stdio: 'pipe',
+    }).stdout,
+  );
+  let installedSdkCount = 0;
+  const forbiddenMcpPackages = new Set([
+    '@modelcontextprotocol/inspector',
+    '@modelcontextprotocol/client',
+    '@modelcontextprotocol/core',
+    '@modelcontextprotocol/server',
+    '@modelcontextprotocol/ext-apps',
+    '@modelcontextprotocol/ext-tasks',
+  ]);
+  function verifyProductionMcpGraph(node) {
+    for (const kind of ['dependencies', 'optionalDependencies']) {
+      for (const [name, dependency] of Object.entries(node[kind] ?? {})) {
+        assert.equal(forbiddenMcpPackages.has(name), false, name);
+        if (name === '@modelcontextprotocol/sdk') {
+          assert.equal(dependency.version, '1.32.1');
+          installedSdkCount += 1;
+        }
+        verifyProductionMcpGraph(dependency);
+      }
+    }
+  }
+  for (const node of productionTree) {
+    verifyProductionMcpGraph(node);
+  }
+  assert.ok(installedSdkCount > 0, 'Packed consumer must install the reviewed MCP v1 SDK.');
   for (const runtimeFile of [
     'dist/src/_shared/oauth_runtime.js',
     'dist/src/_shared/supabase_jwt_verifier.js',

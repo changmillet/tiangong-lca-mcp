@@ -50,7 +50,7 @@
   },
   "dependencies": {
     "@dagrejs/dagre": "3.1.1",
-    "@modelcontextprotocol/sdk": "1.30.0",
+    "@modelcontextprotocol/sdk": "1.32.1",
     "@supabase/supabase-js": "2.112.4",
     "@tiangong-lca/tidas-sdk": "0.2.0",
     "express": "5.2.1",
@@ -58,7 +58,7 @@
     "zod": "4.5.4"
   },
   "devDependencies": {
-    "@modelcontextprotocol/inspector": "2.4.0",
+    "@modelcontextprotocol/inspector": "2.11.0",
     "@types/express": "5.0.6",
     "@types/node": "24.13.3",
     "oxlint": "1.80.0",

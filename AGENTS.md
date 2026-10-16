@@ -43,9 +43,9 @@ checkPaths:
   - scripts/docpact
   - scripts/docpact-gate.sh
   - scripts/install-git-hooks.sh
-lastReviewedAt: 2026-09-23
-lastReviewedCommit: c1b238844245aa5a61ef05be7c1ecfcfb750955e
-lastReviewedNote: 'Current MCP ownership, tool boundaries, and validation rules are reviewed.'
+lastReviewedAt: 2026-10-16
+lastReviewedCommit: e90d0eaff0799a3a8a4925ed80ebe9ec0b8cff0b
+lastReviewedNote: 'MCP #85: qualified SDK 1.32.1 and development-only Inspector 2.11.0 plus bounded vulnerable transitive refreshes; Node 24, TS7, exact package pins, transport/auth behavior, audit threshold, install policy and release/image boundaries remain intact.'
 related:
   - .docpact/config.yaml
   - docs/agents/repo-validation.md
@@ -121,8 +121,8 @@ Route those tasks to:
   - `tiangong-lca-mcp-stdio`
   - `tiangong-lca-mcp-http`
   - `tiangong-lca-mcp-http-local`
-- Direct dependencies must use the latest stable versions compatible with Node `24.19.0` and the reviewed MCP v1 transport. Keep `@types/node` on the latest Node 24 line instead of importing Node 26 types, and require `pnpm peers check` because Inspector 2.4 needs a React 19-compatible development peer graph. Development-only Inspector/React packages must remain absent from the packed production install.
-- `@tiangong-lca/tidas-sdk` stays exact at npm latest `0.2.0`; dependency refreshes must still run all declared TIDAS types and the strict-invalid LifecycleModel zero-fetch boundary.
+- Direct dependencies must use the latest stable versions compatible with Node `24.19.0` and the reviewed MCP v1 transport. Keep `@types/node` on the latest Node 24 line instead of importing Node 26 types, and require `pnpm peers check` because Inspector 2.11 needs a React 19-compatible development peer graph. Development-only Inspector/React packages must remain absent from the packed production install.
+- `@tiangong-lca/tidas-sdk` stays exact at reviewed `0.2.0`; later SDK adoption requires separate qualification, and dependency refreshes must still run all declared TIDAS types and the strict-invalid LifecycleModel zero-fetch boundary.
 - `Dockerfile` must install the exact version in `package.json`. The packed-consumer gate must find the OAuth runtime, Supabase JWT verifier, and HTTP app in that package, prove every removed stateful-auth module is absent, then execute the globally installed HTTP bin through its package-manager shim and receive `/health` before a registry release or ECS image can claim the reviewed source.
 - The Docker runtime must run `corepack enable pnpm` before exact global activation, keep both `/pnpm/bin` and `/pnpm` on OCI `PATH`, and pass a real no-cache Linux ARM64 build; a source-only regex check is not image evidence.
 - The same no-cache build must run `apk upgrade --no-cache` before package-manager setup, read back the patched OpenSSL package, and reach a COMPLETE ECR scan with zero CRITICAL/HIGH findings before ECS may use the digest.
