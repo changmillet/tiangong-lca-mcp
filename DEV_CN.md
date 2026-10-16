@@ -21,9 +21,9 @@ checkPaths:
   - src/**
   - test/**
   - scripts/**
-lastReviewedAt: 2026-09-14
-lastReviewedCommit: b7a27cda880e0638589e8264c4cef6bbc22d552d
-lastReviewedNote: '针对 MCP #78 / 0.2.1 发布完成复核：经 helper 确认的精确版本投影将 0.2.0 推进到 0.2.1，覆盖 package.json、Dockerfile 全局安装 pin、两处活跃 consumer/toolchain 绑定与四份活跃 Docker 运行示例；因 Docker Hub 无已验证的公开预构建 tag，示例改为仅本地构建。SDK 保持精确 0.2.0；lock 字节、依赖、Node 24.19.0、pnpm 11.24.0、TypeScript 7.0.2、runtime/auth 行为、workflow 逻辑与全部历史发布 fixture 不变。'
+lastReviewedAt: 2026-10-16
+lastReviewedCommit: e90d0eaff0799a3a8a4925ed80ebe9ec0b8cff0b
+lastReviewedNote: 'MCP #85: qualified SDK 1.32.1 and development-only Inspector 2.11.0 plus bounded vulnerable transitive refreshes; Node 24, TS7, exact package pins, transport/auth behavior, audit threshold, install policy and release/image boundaries remain intact.'
 related:
   - AGENTS.md
   - .docpact/config.yaml

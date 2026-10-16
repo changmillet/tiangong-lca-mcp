@@ -22,9 +22,9 @@ checkPaths:
   - src/**
   - test/**
   - scripts/**
-lastReviewedAt: 2026-09-14
-lastReviewedCommit: b7a27cda880e0638589e8264c4cef6bbc22d552d
-lastReviewedNote: 'Reviewed for MCP #78 / release 0.2.1: exact helper-confirmed version projection advances 0.2.0 to 0.2.1 across package.json, the Dockerfile global pin, both live consumer/toolchain bindings and the four active Docker run examples, which now describe a local build only because no public Docker Hub prebuilt tag is verified. SDK stays exact 0.2.0; lock bytes, dependencies, Node 24.19.0, pnpm 11.24.0, TypeScript 7.0.2, runtime/auth behavior, workflow logic and every historical release fixture remain unchanged.'
+lastReviewedAt: 2026-10-16
+lastReviewedCommit: e90d0eaff0799a3a8a4925ed80ebe9ec0b8cff0b
+lastReviewedNote: 'MCP #85: qualified SDK 1.32.1 and development-only Inspector 2.11.0 plus bounded vulnerable transitive refreshes; Node 24, TS7, exact package pins, transport/auth behavior, audit threshold, install policy and release/image boundaries remain intact.'
 related:
   - AGENTS.md
   - .docpact/config.yaml
