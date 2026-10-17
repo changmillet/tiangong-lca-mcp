@@ -39,8 +39,8 @@ checkPaths:
   - scripts/docpact-gate.sh
   - scripts/install-git-hooks.sh
 lastReviewedAt: 2026-10-17
-lastReviewedCommit: 9f995edca7a9bf640735df958cc68197d44ab058
-lastReviewedNote: 'MCP #92: reviewed the exact Supabase 2.118.0 family and version-bound header assertion against real old/new offline ES256 claims, auth denials, actor reads, write commands and strict-invalid zero-fetch controls. Product, transport/auth policy, other pins, install restrictions and separate release/image authority are unchanged.'
+lastReviewedCommit: 6d38f989e0eff38e4a910f0291825fe677954e88
+lastReviewedNote: 'MCP #93: reviewed the exact React DOM 19.3.1 development peer graph, matched browser hooks and mismatch controls, unchanged prebundled Inspector web assets and existing matched TUI renderer. Accepted Supabase 2.118.0, production closure, runtime/auth policy, install restrictions and release/image boundaries are preserved.'
 related:
   - ../../AGENTS.md
   - ../../.docpact/config.yaml
