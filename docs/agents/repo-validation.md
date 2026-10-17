@@ -38,9 +38,9 @@ checkPaths:
   - scripts/docpact
   - scripts/docpact-gate.sh
   - scripts/install-git-hooks.sh
-lastReviewedAt: 2026-10-17
-lastReviewedCommit: 6d38f989e0eff38e4a910f0291825fe677954e88
-lastReviewedNote: 'MCP #93: reviewed the exact React DOM 19.3.1 development peer graph, matched browser hooks and mismatch controls, unchanged prebundled Inspector web assets and existing matched TUI renderer. Accepted Supabase 2.118.0, production closure, runtime/auth policy, install restrictions and release/image boundaries are preserved.'
+lastReviewedAt: 2026-10-18
+lastReviewedCommit: ca24ab5a344151bfa207a1507a193b42ba56de19
+lastReviewedNote: 'MCP #94: reviewed four pnpm/setup 3.1.1 pins at immutable executable a0881977cd8ea73b1ed212236c99ca10dcc80cf4. Explicit Node 24.19.0, pnpm 11.24.0, install/cache/frozen behavior, native shell:false and Corepack fallback, four-platform matrix, release guards, permissions and package/runtime/auth boundaries are preserved; full local gate passed. Hosted source qualification remains pending.'
 related:
   - ../../AGENTS.md
   - ../../.docpact/config.yaml
