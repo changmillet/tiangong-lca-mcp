@@ -38,9 +38,9 @@ checkPaths:
   - scripts/docpact
   - scripts/docpact-gate.sh
   - scripts/install-git-hooks.sh
-lastReviewedAt: 2026-10-16
-lastReviewedCommit: 2cac631232e50bd3a982509c7d4f15dca7ada4c8
-lastReviewedNote: 'MCP #84 rebased onto qualified #85: bounded monitoring and narrow lock maintenance preserve SDK 1.32.1, development Inspector 2.11.0, audit/transport guards and exact runtime/install contracts; Docker qualification stays separate under #86.'
+lastReviewedAt: 2026-10-17
+lastReviewedCommit: 9f995edca7a9bf640735df958cc68197d44ab058
+lastReviewedNote: 'MCP #92: reviewed the exact Supabase 2.118.0 family and version-bound header assertion against real old/new offline ES256 claims, auth denials, actor reads, write commands and strict-invalid zero-fetch controls. Product, transport/auth policy, other pins, install restrictions and separate release/image authority are unchanged.'
 related:
   - ../../AGENTS.md
   - ../../.docpact/config.yaml
