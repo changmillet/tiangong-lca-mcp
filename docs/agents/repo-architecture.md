@@ -33,9 +33,9 @@ checkPaths:
   - scripts/docpact
   - scripts/docpact-gate.sh
   - scripts/install-git-hooks.sh
-lastReviewedAt: 2026-10-16
-lastReviewedCommit: 2cac631232e50bd3a982509c7d4f15dca7ada4c8
-lastReviewedNote: 'MCP #84 rebased onto qualified #85: bounded monitoring and narrow lock maintenance preserve SDK 1.32.1, development Inspector 2.11.0, audit/transport guards and exact runtime/install contracts; Docker qualification stays separate under #86.'
+lastReviewedAt: 2026-10-17
+lastReviewedCommit: 9f995edca7a9bf640735df958cc68197d44ab058
+lastReviewedNote: 'MCP #92: reviewed the exact Supabase 2.118.0 family and version-bound header assertion against real old/new offline ES256 claims, auth denials, actor reads, write commands and strict-invalid zero-fetch controls. Product, transport/auth policy, other pins, install restrictions and separate release/image authority are unchanged.'
 related:
   - ../../AGENTS.md
   - ../../.docpact/config.yaml
@@ -128,7 +128,7 @@ On Node Alpine, Corepack activation and pnpm global installation are separate bo
 
 The build upgrades Alpine packages before package-manager setup and records the installed OpenSSL version. The ECR qualification command disables provenance so the tag resolves to one scan-compatible ARM64 image manifest instead of an OCI index. The tag is commit-bearing and must be absent before push. Qualification reuses scan-on-push, starts only for `ScanNotFoundException`, preserves every other probe error, and exits before run unless the result is COMPLETE with exactly zero CRITICAL and HIGH findings. A vulnerable or unscannable image remains evidence only and is never an ECS task input.
 
-The MCP `0.2.1` package graph is single-track Node `24.19.0`, pnpm `11.24.0`, TypeScript `7.0.2`, TIDAS SDK `0.2.0`, Supabase JS `2.112.4`, MCP SDK `1.32.1`, and Zod `4.5.4`. Inspector `2.11.0`, React DOM `19.2.8`, and tsx `4.23.13` are development-only; React DOM supplies Inspector's React 19 peer without entering the production archive. The packed-consumer proof imports all three packaged entry modules from an arbitrary path, verifies that compiler, lint, test, and Inspector/React tooling is absent from the production install, and proves that canonical realpath comparison still treats the generated global shim target as the executable entrypoint.
+The MCP `0.2.1` package graph is single-track Node `24.19.0`, pnpm `11.24.0`, TypeScript `7.0.2`, TIDAS SDK `0.2.0`, Supabase JS `2.118.0`, MCP SDK `1.32.1`, and Zod `4.5.4`. Inspector `2.11.0`, React DOM `19.2.8`, and tsx `4.23.13` are development-only; React DOM supplies Inspector's React 19 peer without entering the production archive. The packed-consumer proof imports all three packaged entry modules from an arbitrary path, verifies that compiler, lint, test, and Inspector/React tooling is absent from the production install, and proves that canonical realpath comparison still treats the generated global shim target as the executable entrypoint.
 
 Inspector's split v2 client/core/server packages remain development-only. The packed-consumer proof recursively inspects its actual production install, requires SDK `1.32.1`, and rejects Inspector and its split v2 packages throughout the dependency tree.
 

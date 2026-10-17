@@ -21,9 +21,9 @@ checkPaths:
   - src/**
   - test/**
   - scripts/**
-lastReviewedAt: 2026-10-16
-lastReviewedCommit: e90d0eaff0799a3a8a4925ed80ebe9ec0b8cff0b
-lastReviewedNote: 'MCP #85: qualified SDK 1.32.1 and development-only Inspector 2.11.0 plus bounded vulnerable transitive refreshes; Node 24, TS7, exact package pins, transport/auth behavior, audit threshold, install policy and release/image boundaries remain intact.'
+lastReviewedAt: 2026-10-17
+lastReviewedCommit: 9f995edca7a9bf640735df958cc68197d44ab058
+lastReviewedNote: 'MCP #92: reviewed the exact Supabase 2.118.0 family and version-bound header assertion against real old/new offline ES256 claims, auth denials, actor reads, write commands and strict-invalid zero-fetch controls. Product, transport/auth policy, other pins, install restrictions and separate release/image authority are unchanged.'
 related:
   - AGENTS.md
   - .docpact/config.yaml
