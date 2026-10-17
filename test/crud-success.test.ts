@@ -169,7 +169,7 @@ describe('Database_CRUD_Tool offline success contract', () => {
           '/functions/v1/delete_lifecycle_model_bundle',
         ],
       );
-      assert.match(select.headers.get('x-client-info') ?? '', /^supabase-js\/2\.112\.4;/u);
+      assert.match(select.headers.get('x-client-info') ?? '', /^supabase-js\/2\.118\.0;/u);
       for (const request of [insert, update, remove]) {
         assert.equal(request.headers.get('x-region'), 'us-east-1');
         assert.equal(request.headers.get('content-type'), 'application/json');
