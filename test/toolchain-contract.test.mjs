@@ -36,7 +36,7 @@ describe('pnpm and TypeScript 7 toolchain contract', () => {
     assert.equal(packageJson.devDependencies?.typescript, '7.0.2');
     assert.equal(packageJson.dependencies?.['@tiangong-lca/tidas-sdk'], '0.2.0');
     assert.equal(packageJson.dependencies?.['@upstash/redis'], undefined);
-    assert.equal(packageJson.dependencies?.zod, '4.5.4');
+    assert.equal(packageJson.dependencies?.zod, '4.6.7');
     assert.equal(packageJson.devDependencies?.['@modelcontextprotocol/inspector'], '2.11.0');
     assert.equal(packageJson.dependencies?.['@modelcontextprotocol/sdk'], '1.32.1');
     assert.equal(packageJson.devDependencies?.['@types/node'], '24.13.3');

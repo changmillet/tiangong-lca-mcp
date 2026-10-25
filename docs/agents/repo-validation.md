@@ -39,8 +39,8 @@ checkPaths:
   - scripts/docpact-gate.sh
   - scripts/install-git-hooks.sh
 lastReviewedAt: 2026-10-25
-lastReviewedCommit: b78f4244f89e805b6d109242017f06adfdba9bc3
-lastReviewedNote: 'MCP #97: reviewed explicit backend selection, lazy URL/key guards across search and database consumers, offline regression and STDIO/local availability. HTTP OAuth, tool schemas, dependency graph and publication boundaries remain unchanged.'
+lastReviewedCommit: 3ddf1367e7d48fc12cf43e953ef539070c7671fd
+lastReviewedNote: 'MCP #97: reviewed explicit backend guards and offline/STDIO regression, plus the bounded Zod/body-parser/Vite/Undici security repair. HTTP OAuth, public schemas, SDK, Express, source package version, Docker pin and publication boundaries are preserved.'
 related:
   - ../../AGENTS.md
   - ../../.docpact/config.yaml
@@ -88,6 +88,8 @@ The clean-worktree check resolves the source checkout's store with the verified 
 Dependency proposals reuse this existing gate without a new general check. See [dependency maintenance](dependency-maintenance.md) for grouped monitoring, lock-only governance and the unqualified Docker-monitoring prerequisite.
 
 ## Known Caveats
+
+MCP #97 repairs the inherited high-severity audit blockers with Zod `4.6.7`, body-parser `2.4.0`, Vite `8.2.4`, and Undici `8.12.3`. The Vite/Undici resolutions stay on the existing minor branches; Zod/body-parser need the next minor to receive the fixes. No dependency overrides, source package version, SDK, Express, Node, pnpm, or Docker pin change is part of this repair. The baseline audit had four high findings; the reviewed candidate has zero high/critical and retains two low/two moderate findings. Keep the ordinary audit gate and all transport/auth/validation tests.
 
 Facts that matter today:
 
