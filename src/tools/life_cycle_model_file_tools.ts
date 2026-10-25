@@ -5,7 +5,7 @@ import {
   type EnhancedValidationResult,
   type NormalizedValidationIssue,
 } from '@tiangong-lca/tidas-sdk/core';
-import { supabase_base_url, supabase_publishable_key } from '../_shared/config.js';
+import { requireSupabaseBaseUrl, requireSupabasePublishableKey } from '../_shared/config.js';
 import { TidasValidationError } from '../_shared/tidas_validation.js';
 
 type JsonPrimitive = string | number | boolean | null;
@@ -368,7 +368,7 @@ function modelEdgesFromConnections(processInstances: Array<JsonRecord>): ModelEd
 async function createSupabaseClient(bearerKey?: string): Promise<{ supabase: SupabaseClient }> {
   const accessToken = bearerKey?.trim() || undefined;
 
-  const supabase = createClient(supabase_base_url, supabase_publishable_key, {
+  const supabase = createClient(requireSupabaseBaseUrl(), requireSupabasePublishableKey(), {
     auth: {
       persistSession: false,
       autoRefreshToken: false,

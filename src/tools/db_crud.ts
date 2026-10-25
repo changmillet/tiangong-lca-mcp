@@ -3,9 +3,8 @@ import { createClient, type SupabaseClient } from '@supabase/supabase-js';
 import type { EnhancedValidationResult } from '@tiangong-lca/tidas-sdk/core';
 import { z } from 'zod';
 import {
-  supabase_base_url,
-  supabase_functions_base_url,
-  supabase_publishable_key,
+  requireSupabaseBaseUrl,
+  requireSupabasePublishableKey,
   x_region,
 } from '../_shared/config.js';
 import { TidasValidationError } from '../_shared/tidas_validation.js';
@@ -214,13 +213,13 @@ async function executeEdgeCommand(
   accessToken: string,
   payload: Record<string, unknown>,
 ): Promise<Record<string, unknown>> {
-  const response = await fetch(`${supabase_functions_base_url}/${command}`, {
+  const response = await fetch(`${requireSupabaseBaseUrl()}/functions/v1/${command}`, {
     method: 'POST',
     headers: {
       Accept: 'application/json',
       Authorization: `Bearer ${accessToken}`,
       'Content-Type': 'application/json',
-      apikey: supabase_publishable_key,
+      apikey: requireSupabasePublishableKey(),
       'x-region': x_region,
     },
     body: JSON.stringify(payload),
@@ -448,7 +447,7 @@ async function createSupabaseClient(
 ): Promise<{ supabase: SupabaseClient; accessToken?: string }> {
   const accessToken = bearerKey?.trim() || undefined;
 
-  const supabase = createClient(supabase_base_url, supabase_publishable_key, {
+  const supabase = createClient(requireSupabaseBaseUrl(), requireSupabasePublishableKey(), {
     auth: {
       persistSession: false,
       autoRefreshToken: false,

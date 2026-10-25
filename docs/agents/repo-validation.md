@@ -38,9 +38,9 @@ checkPaths:
   - scripts/docpact
   - scripts/docpact-gate.sh
   - scripts/install-git-hooks.sh
-lastReviewedAt: 2026-10-18
-lastReviewedCommit: ca24ab5a344151bfa207a1507a193b42ba56de19
-lastReviewedNote: 'MCP #94: reviewed four pnpm/setup 3.1.1 pins at immutable executable a0881977cd8ea73b1ed212236c99ca10dcc80cf4. Explicit Node 24.19.0, pnpm 11.24.0, install/cache/frozen behavior, native shell:false and Corepack fallback, four-platform matrix, release guards, permissions and package/runtime/auth boundaries are preserved; full local gate passed. Hosted source qualification remains pending.'
+lastReviewedAt: 2026-10-25
+lastReviewedCommit: 3ddf1367e7d48fc12cf43e953ef539070c7671fd
+lastReviewedNote: 'MCP #97: reviewed explicit backend guards and offline/STDIO regression, plus the bounded Zod/body-parser/Vite/Undici security repair. HTTP OAuth, public schemas, SDK, Express, source package version, Docker pin and publication boundaries are preserved.'
 related:
   - ../../AGENTS.md
   - ../../.docpact/config.yaml
@@ -72,6 +72,8 @@ The clean-worktree check resolves the source checkout's store with the verified 
 
 ## Validation Matrix
 
+`test/backend-configuration.test.ts` uses isolated process environments and a fetch replacement to prove that missing/blank/invalid backends cause zero fetches across all three searches, CRUD reads, and ordinary/LifecycleModel commands. It checks the shared guards used by model process lookup, explicit custom/loopback targets, missing database keys, and real STDIO initialization/listing/local guidance with and without a backend. Empty raw query/fragment delimiters (`?`/`#`) are rejected before any fetch, including when the URL parser reports an empty query or fragment. Existing success tests explicitly select a synthetic mocked backend. HTTP OAuth and strict-invalid model zero-fetch tests remain required.
+
 | Change type | Minimum local proof | Additional proof when risk is higher | Notes |
 | --- | --- | --- | --- |
 | `src/index*.ts`, `src/http_app*.ts`, or transport init helpers | `pnpm test`; `pnpm build` | run the relevant built entrypoint through the intended start script when the task explicitly includes an interactive smoke check | Offline tests cover import side effects, health, method guards, JSON-RPC parsing, discovery, cleanup, cancellation, and repeated authenticated/local factory throws with sentinel leak checks. |
@@ -86,6 +88,8 @@ The clean-worktree check resolves the source checkout's store with the verified 
 Dependency proposals reuse this existing gate without a new general check. See [dependency maintenance](dependency-maintenance.md) for grouped monitoring, lock-only governance and the unqualified Docker-monitoring prerequisite.
 
 ## Known Caveats
+
+MCP #97 repairs the inherited high-severity audit blockers with Zod `4.6.7`, body-parser `2.4.0`, Vite `8.2.4`, and Undici `8.12.3`. The Vite/Undici resolutions stay on the existing minor branches; Zod/body-parser need the next minor to receive the fixes. No dependency overrides, source package version, SDK, Express, Node, pnpm, or Docker pin change is part of this repair. The baseline audit had four high findings; the reviewed candidate has zero high/critical and retains two low/two moderate findings. Keep the ordinary audit gate and all transport/auth/validation tests.
 
 Facts that matter today:
 

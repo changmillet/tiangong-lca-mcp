@@ -43,9 +43,9 @@ checkPaths:
   - scripts/docpact
   - scripts/docpact-gate.sh
   - scripts/install-git-hooks.sh
-lastReviewedAt: 2026-10-18
-lastReviewedCommit: ca24ab5a344151bfa207a1507a193b42ba56de19
-lastReviewedNote: 'MCP #94: reviewed four pnpm/setup 3.1.1 pins at immutable executable a0881977cd8ea73b1ed212236c99ca10dcc80cf4. Explicit Node 24.19.0, pnpm 11.24.0, install/cache/frozen behavior, native shell:false and Corepack fallback, four-platform matrix, release guards, permissions and package/runtime/auth boundaries are preserved; full local gate passed. Hosted source qualification remains pending.'
+lastReviewedAt: 2026-10-25
+lastReviewedCommit: 3ddf1367e7d48fc12cf43e953ef539070c7671fd
+lastReviewedNote: 'MCP #97: reviewed explicit backend guards and offline/STDIO regression, plus the bounded Zod/body-parser/Vite/Undici security repair. HTTP OAuth, public schemas, SDK, Express, source package version, Docker pin and publication boundaries are preserved.'
 related:
   - .docpact/config.yaml
   - docs/agents/repo-validation.md
@@ -135,6 +135,8 @@ Route those tasks to:
 - The remote service owns no authorization code, access/refresh grant, login session, refresh lock, or revocation store. Clients retain rotating refresh tokens locally; Supabase Auth owns authorization and revocation state.
 
 ## Hard Boundaries
+
+- Supabase remote tools require an explicit backend; shared configuration never supplies a first-party production URL or publishable key. Validate lazily before remote I/O so STDIO initialization and local tools remain usable without that configuration. HTTP OAuth startup and downstream authorization remain unchanged.
 
 - Do not treat the MCP repo as the source of truth for remote Edge search semantics
 - Do not move product UI or app workflow behavior into this repo

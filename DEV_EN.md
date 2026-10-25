@@ -22,9 +22,9 @@ checkPaths:
   - src/**
   - test/**
   - scripts/**
-lastReviewedAt: 2026-10-17
-lastReviewedCommit: 6d38f989e0eff38e4a910f0291825fe677954e88
-lastReviewedNote: 'MCP #93: reviewed the exact React DOM 19.3.1 development peer graph, matched browser hooks and mismatch controls, unchanged prebundled Inspector web assets and existing matched TUI renderer. Accepted Supabase 2.118.0, production closure, runtime/auth policy, install restrictions and release/image boundaries are preserved.'
+lastReviewedAt: 2026-10-25
+lastReviewedCommit: 3ddf1367e7d48fc12cf43e953ef539070c7671fd
+lastReviewedNote: 'MCP #97: reviewed explicit backend guards and offline/STDIO regression, plus the bounded Zod/body-parser/Vite/Undici security repair. HTTP OAuth, public schemas, SDK, Express, source package version, Docker pin and publication boundaries are preserved.'
 related:
   - AGENTS.md
   - .docpact/config.yaml
@@ -43,6 +43,8 @@ TianGong AI Model Context Protocol (MCP) Server supports STDIO and StreamableHtt
 
 ### Client STDIO Server
 
+Supabase tools require an explicit `SUPABASE_BASE_URL`; database clients and commands also require `SUPABASE_PUBLISHABLE_KEY`. Neither value falls back to a first-party production setting. Configuration is checked lazily before remote fetch/client creation so STDIO handshake, registration, and local tools work without a backend. The backend URL accepts HTTP(S), including local development, without userinfo, query, or fragment; errors do not echo configuration values. The authenticated HTTP origin/HTTPS and OAuth admission checks remain unchanged.
+
 ```bash
 corepack install --global pnpm@11.24.0
 pnpm add --global @tiangong-lca/mcp-server
@@ -51,6 +53,8 @@ pnpm dlx dotenv-cli -e .env -- tiangong-lca-mcp-stdio
 ```
 
 ### Using Docker
+
+The checked-in Dockerfile installs published `@tiangong-lca/mcp-server@0.2.1`, rather than building this checkout. Source changes apply to a checkout build; existing npm packages and images need a separately reviewed release to receive them.
 
 ```bash
 # Build the MCP server image locally using Dockerfile

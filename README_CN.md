@@ -21,9 +21,9 @@ checkPaths:
   - src/index_server_local.ts
   - src/http_app.ts
   - src/http_app_local.ts
-lastReviewedAt: 2026-09-14
-lastReviewedCommit: b7a27cda880e0638589e8264c4cef6bbc22d552d
-lastReviewedNote: '针对 MCP #78 / 0.2.1 发布完成复核：经 helper 确认的精确版本投影将 0.2.0 推进到 0.2.1，覆盖 package.json、Dockerfile 全局安装 pin、两处活跃 consumer/toolchain 绑定与四份活跃 Docker 运行示例；因 Docker Hub 无已验证的公开预构建 tag，示例改为仅本地构建。SDK 保持精确 0.2.0；lock 字节、依赖、Node 24.19.0、pnpm 11.24.0、TypeScript 7.0.2、runtime/auth 行为、workflow 逻辑与全部历史发布 fixture 不变。'
+lastReviewedAt: 2026-10-25
+lastReviewedCommit: 3ddf1367e7d48fc12cf43e953ef539070c7671fd
+lastReviewedNote: 'MCP #97: reviewed explicit backend guards and offline/STDIO regression, plus the bounded Zod/body-parser/Vite/Undici security repair. HTTP OAuth, public schemas, SDK, Express, source package version, Docker pin and publication boundaries are preserved.'
 related:
   - AGENTS.md
   - .docpact/config.yaml
@@ -62,6 +62,8 @@ MCP origin 不暴露 authorization、token、refresh、revoke、callback、regis
 
 ### 客户端 STDIO 服务器
 
+使用 Supabase 搜索工具前，必须显式将 `SUPABASE_BASE_URL` 配置为自己的后端；没有默认生产后端。后端未配置或地址无效时，调用会在发出请求前于本地失败，STDIO 初始化、工具列表与本地指导工具仍可使用。数据库操作还需要该后端的 `SUPABASE_PUBLISHABLE_KEY`。远程 HTTP 继续要求上面的完整 OAuth 配置。
+
 ```bash
 corepack install --global pnpm@11.24.0
 pnpm add --global @tiangong-lca/mcp-server
@@ -70,6 +72,8 @@ pnpm dlx dotenv-cli -e .env -- tiangong-lca-mcp-stdio
 ```
 
 ### 使用 Docker
+
+仓库 Dockerfile 安装的是已发布的 `@tiangong-lca/mcp-server@0.2.1`，不会构建当前 checkout。源码变更适用于 checkout 构建；已有 npm 包与镜像需要另行审核发布后才会包含修复。
 
 ```bash
 # 使用 Dockerfile 在本地构建 MCP 服务器镜像

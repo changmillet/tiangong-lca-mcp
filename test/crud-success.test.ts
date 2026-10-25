@@ -1,3 +1,4 @@
+import './helpers/backend-env.js';
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import assert from 'node:assert/strict';
 import { describe, it } from 'node:test';

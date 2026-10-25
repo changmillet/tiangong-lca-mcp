@@ -55,7 +55,7 @@
     "@tiangong-lca/tidas-sdk": "0.2.0",
     "express": "5.2.1",
     "olca-ipc": "2.6.2",
-    "zod": "4.5.4"
+    "zod": "4.6.7"
   },
   "devDependencies": {
     "@modelcontextprotocol/inspector": "2.11.0",
