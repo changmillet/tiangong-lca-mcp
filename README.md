@@ -21,9 +21,9 @@ checkPaths:
   - src/index_server_local.ts
   - src/http_app.ts
   - src/http_app_local.ts
-lastReviewedAt: 2026-09-14
-lastReviewedCommit: b7a27cda880e0638589e8264c4cef6bbc22d552d
-lastReviewedNote: 'Reviewed for MCP #78 / release 0.2.1: exact helper-confirmed version projection advances 0.2.0 to 0.2.1 across package.json, the Dockerfile global pin, both live consumer/toolchain bindings and the four active Docker run examples, which now describe a local build only because no public Docker Hub prebuilt tag is verified. SDK stays exact 0.2.0; lock bytes, dependencies, Node 24.19.0, pnpm 11.24.0, TypeScript 7.0.2, runtime/auth behavior, workflow logic and every historical release fixture remain unchanged.'
+lastReviewedAt: 2026-10-25
+lastReviewedCommit: b78f4244f89e805b6d109242017f06adfdba9bc3
+lastReviewedNote: 'MCP #97: reviewed explicit backend selection, lazy URL/key guards across search and database consumers, offline regression and STDIO/local availability. HTTP OAuth, tool schemas, dependency graph and publication boundaries remain unchanged.'
 related:
   - AGENTS.md
   - .docpact/config.yaml
@@ -62,6 +62,8 @@ The MCP origin exposes no authorization, token, refresh, revoke, callback, regis
 
 ### Client STDIO Server
 
+Set `SUPABASE_BASE_URL` explicitly to your own backend before using Supabase search tools. There is no default production backend. Missing or invalid backend configuration fails locally before a request; STDIO initialization, tool listing, and local guidance remain available. Database operations also require your backend's `SUPABASE_PUBLISHABLE_KEY`. Authenticated HTTP continues to require the full OAuth configuration above.
+
 ```bash
 corepack install --global pnpm@11.24.0
 pnpm add --global @tiangong-lca/mcp-server
@@ -70,6 +72,8 @@ pnpm dlx dotenv-cli -e .env -- tiangong-lca-mcp-stdio
 ```
 
 ### Using Docker
+
+The checked-in Dockerfile installs published `@tiangong-lca/mcp-server@0.2.1`, rather than building this checkout. Source changes apply to a checkout build; existing npm packages and images need a separately reviewed release to receive them.
 
 ```bash
 # Build the MCP server image locally using Dockerfile

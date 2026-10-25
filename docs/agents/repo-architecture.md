@@ -33,9 +33,9 @@ checkPaths:
   - scripts/docpact
   - scripts/docpact-gate.sh
   - scripts/install-git-hooks.sh
-lastReviewedAt: 2026-10-18
-lastReviewedCommit: ca24ab5a344151bfa207a1507a193b42ba56de19
-lastReviewedNote: 'MCP #94: reviewed four pnpm/setup 3.1.1 pins at immutable executable a0881977cd8ea73b1ed212236c99ca10dcc80cf4. Explicit Node 24.19.0, pnpm 11.24.0, install/cache/frozen behavior, native shell:false and Corepack fallback, four-platform matrix, release guards, permissions and package/runtime/auth boundaries are preserved; full local gate passed. Hosted source qualification remains pending.'
+lastReviewedAt: 2026-10-25
+lastReviewedCommit: b78f4244f89e805b6d109242017f06adfdba9bc3
+lastReviewedNote: 'MCP #97: reviewed explicit backend selection, lazy URL/key guards across search and database consumers, offline regression and STDIO/local availability. HTTP OAuth, tool schemas, dependency graph and publication boundaries remain unchanged.'
 related:
   - ../../AGENTS.md
   - ../../.docpact/config.yaml
@@ -82,6 +82,8 @@ These wrappers forward bearer auth and region headers to remote Edge Functions:
 - `src/tools/life_cycle_model_hybrid_search.ts`
 
 They are wrappers, not the underlying search implementation.
+
+`src/_shared/config.ts` has no default Supabase backend or publishable key. All three search wrappers call the lazy `requireSupabaseBaseUrl()` guard before fetch. CRUD Edge commands and both CRUD/model process-lookup Supabase client factories use that same URL guard plus `requireSupabasePublishableKey()`. Local initialization and tools remain independent of those settings; the authenticated HTTP startup keeps its separate strict OAuth configuration checks. GLAD remains an explicitly separate public API dependency.
 
 ### GLAD dataset lookup
 

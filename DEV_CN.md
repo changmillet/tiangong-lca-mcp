@@ -21,9 +21,9 @@ checkPaths:
   - src/**
   - test/**
   - scripts/**
-lastReviewedAt: 2026-10-17
-lastReviewedCommit: 6d38f989e0eff38e4a910f0291825fe677954e88
-lastReviewedNote: 'MCP #93: reviewed the exact React DOM 19.3.1 development peer graph, matched browser hooks and mismatch controls, unchanged prebundled Inspector web assets and existing matched TUI renderer. Accepted Supabase 2.118.0, production closure, runtime/auth policy, install restrictions and release/image boundaries are preserved.'
+lastReviewedAt: 2026-10-25
+lastReviewedCommit: b78f4244f89e805b6d109242017f06adfdba9bc3
+lastReviewedNote: 'MCP #97: reviewed explicit backend selection, lazy URL/key guards across search and database consumers, offline regression and STDIO/local availability. HTTP OAuth, tool schemas, dependency graph and publication boundaries remain unchanged.'
 related:
   - AGENTS.md
   - .docpact/config.yaml
@@ -42,6 +42,8 @@ TianGong LCA Model Context Protocol (MCP) Server 支持 STDIO 和 StreamableHttp
 
 ### 客户端 STDIO 服务器
 
+Supabase 工具要求显式配置 `SUPABASE_BASE_URL`，数据库客户端与命令还要求 `SUPABASE_PUBLISHABLE_KEY`；这两个值都不会回退到官方生产配置。配置在远程 fetch／创建客户端前才检查，因此未配置后端仍可完成 STDIO 握手、注册与本地工具调用。后端地址接受 HTTP(S)（包括本地开发），禁止 userinfo、query 与 fragment；错误不回显配置值。远程 HTTP 的 origin／HTTPS 和 OAuth 准入检查保持原有要求。
+
 ```bash
 corepack install --global pnpm@11.24.0
 pnpm add --global @tiangong-lca/mcp-server
@@ -50,6 +52,8 @@ pnpm dlx dotenv-cli -e .env -- tiangong-lca-mcp-stdio
 ```
 
 ### 使用 Docker
+
+仓库 Dockerfile 安装的是已发布的 `@tiangong-lca/mcp-server@0.2.1`，不会构建当前 checkout。源码变更适用于 checkout 构建；已有 npm 包与镜像需要另行审核发布后才会包含修复。
 
 ```bash
 # 使用 Dockerfile 在本地构建 MCP 服务器镜像

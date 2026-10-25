@@ -1,3 +1,4 @@
+import './helpers/backend-env.js';
 import assert from 'node:assert/strict';
 import { describe, it } from 'node:test';
 import { initializeServer as initializeStdioServer } from '../src/_shared/init_server.js';

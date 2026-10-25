@@ -38,9 +38,9 @@ checkPaths:
   - scripts/docpact
   - scripts/docpact-gate.sh
   - scripts/install-git-hooks.sh
-lastReviewedAt: 2026-10-18
-lastReviewedCommit: ca24ab5a344151bfa207a1507a193b42ba56de19
-lastReviewedNote: 'MCP #94: reviewed four pnpm/setup 3.1.1 pins at immutable executable a0881977cd8ea73b1ed212236c99ca10dcc80cf4. Explicit Node 24.19.0, pnpm 11.24.0, install/cache/frozen behavior, native shell:false and Corepack fallback, four-platform matrix, release guards, permissions and package/runtime/auth boundaries are preserved; full local gate passed. Hosted source qualification remains pending.'
+lastReviewedAt: 2026-10-25
+lastReviewedCommit: b78f4244f89e805b6d109242017f06adfdba9bc3
+lastReviewedNote: 'MCP #97: reviewed explicit backend selection, lazy URL/key guards across search and database consumers, offline regression and STDIO/local availability. HTTP OAuth, tool schemas, dependency graph and publication boundaries remain unchanged.'
 related:
   - ../../AGENTS.md
   - ../../.docpact/config.yaml
@@ -71,6 +71,8 @@ The gate is intentionally non-mutating and includes:
 The clean-worktree check resolves the source checkout's store with the verified pnpm executable, then checks that the same explicit `--store-dir` resolves to that exact store in the temporary worktree before installation. It passes the store option only to the fresh `--frozen-lockfile` install; copied inputs, independent `node_modules`, arbitrary paths with spaces, Windows cross-volume placement and all later gates/cleanup remain unchanged. No installed runtime or gate result is reused and no global pnpm configuration is changed. Missing, malformed or inconsistent store discovery fails before installation. pnpm copies packages instead of hardlinking when the explicit store is on another filesystem; compare actual download/import overhead on the same workload rather than assuming a net speedup from fewer downloads.
 
 ## Validation Matrix
+
+`test/backend-configuration.test.ts` uses isolated process environments and a fetch replacement to prove that missing/blank/invalid backends cause zero fetches across all three searches, CRUD reads, and ordinary/LifecycleModel commands. It checks the shared guards used by model process lookup, explicit custom/loopback targets, missing database keys, and real STDIO initialization/listing/local guidance with and without a backend. Existing success tests explicitly select a synthetic mocked backend. HTTP OAuth and strict-invalid model zero-fetch tests remain required.
 
 | Change type | Minimum local proof | Additional proof when risk is higher | Notes |
 | --- | --- | --- | --- |
