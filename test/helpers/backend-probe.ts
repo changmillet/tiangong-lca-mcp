@@ -31,16 +31,6 @@ globalThis.fetch = async (input, init) => {
 };
 console.error = () => {};
 
-// The actual CRUD and model process-lookup client factories both use these guards.
-if (expectedError) {
-  assert.throws(
-    () =>
-      expectedError === 'SUPABASE_PUBLISHABLE_KEY'
-        ? requireSupabasePublishableKey()
-        : requireSupabaseBaseUrl(),
-    new RegExp(expectedError, 'u'),
-  );
-}
 const server = new McpServer({ name: 'backend-probe', version: '1.0.0' });
 regCrudTool(server, 'test-bearer', {
   prepareWritePayload: async () => ({
@@ -73,6 +63,17 @@ try {
       if (expectedError) assert.match(JSON.stringify(response), new RegExp(expectedError, 'u'));
     }
   }
+  // The actual CRUD and model process-lookup client factories both use these guards.
+  if (expectedError) {
+    assert.throws(
+      () =>
+        expectedError === 'SUPABASE_PUBLISHABLE_KEY'
+          ? requireSupabasePublishableKey()
+          : requireSupabaseBaseUrl(),
+      new RegExp(expectedError, 'u'),
+    );
+  }
+
   if (expectedError) {
     assert.equal(requests.length, 0);
   } else {

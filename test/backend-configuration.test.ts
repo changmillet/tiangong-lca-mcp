@@ -27,6 +27,13 @@ describe('explicit Supabase backend', () => {
       'test-key',
       'SUPABASE_BASE_URL',
     ],
+    ['empty query delimiter', 'https://backend.example.invalid?', 'test-key', 'SUPABASE_BASE_URL'],
+    [
+      'empty fragment delimiter',
+      'https://backend.example.invalid#',
+      'test-key',
+      'SUPABASE_BASE_URL',
+    ],
     ['unsupported scheme', 'file:///tmp/backend', 'test-key', 'SUPABASE_BASE_URL'],
     ['missing database key', 'https://backend.example.invalid', '', 'SUPABASE_PUBLISHABLE_KEY'],
     ['custom backend', 'https://backend.example.invalid', 'test-key', undefined],

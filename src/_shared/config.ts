@@ -16,6 +16,8 @@ export function requireSupabaseBaseUrl(): string {
   }
   if (
     !['http:', 'https:'].includes(url.protocol) ||
+    supabase_base_url.includes('?') ||
+    supabase_base_url.includes('#') ||
     url.username ||
     url.password ||
     url.search ||

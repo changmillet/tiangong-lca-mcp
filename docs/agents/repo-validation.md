@@ -72,7 +72,7 @@ The clean-worktree check resolves the source checkout's store with the verified 
 
 ## Validation Matrix
 
-`test/backend-configuration.test.ts` uses isolated process environments and a fetch replacement to prove that missing/blank/invalid backends cause zero fetches across all three searches, CRUD reads, and ordinary/LifecycleModel commands. It checks the shared guards used by model process lookup, explicit custom/loopback targets, missing database keys, and real STDIO initialization/listing/local guidance with and without a backend. Existing success tests explicitly select a synthetic mocked backend. HTTP OAuth and strict-invalid model zero-fetch tests remain required.
+`test/backend-configuration.test.ts` uses isolated process environments and a fetch replacement to prove that missing/blank/invalid backends cause zero fetches across all three searches, CRUD reads, and ordinary/LifecycleModel commands. It checks the shared guards used by model process lookup, explicit custom/loopback targets, missing database keys, and real STDIO initialization/listing/local guidance with and without a backend. Empty raw query/fragment delimiters (`?`/`#`) are rejected before any fetch, including when the URL parser reports an empty query or fragment. Existing success tests explicitly select a synthetic mocked backend. HTTP OAuth and strict-invalid model zero-fetch tests remain required.
 
 | Change type | Minimum local proof | Additional proof when risk is higher | Notes |
 | --- | --- | --- | --- |
