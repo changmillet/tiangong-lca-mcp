@@ -13,8 +13,8 @@ whenToUpdate:
 checkPaths:
   - .github/dependabot.yml
   - docs/agents/dependency-maintenance.md
-lastReviewedAt: 2026-10-16
-lastReviewedCommit: 2cac631232e50bd3a982509c7d4f15dca7ada4c8
+lastReviewedAt: 2026-10-26
+lastReviewedCommit: 653359ed371fb26c04899608add6b5b9b011c9e6
 lastReviewedNote: 'MCP #84: bounded npm/Actions discovery reuses existing portable checks; image monitoring remains an explicit unqualified prerequisite.'
 related:
   - ../../AGENTS.md
@@ -24,6 +24,8 @@ related:
 # Dependency maintenance
 
 Dependabot monitors the single root pnpm graph on Mondays at 04:00 and GitHub Actions at 04:20, in Asia/Shanghai. Both entries use a seven-day version cooldown. The initial limits are two npm PRs and one Actions PR. Related MCP transport and Inspector/React updates, Supabase packages, Oxlint packages and development tools have patch/minor groups; package majors and the exact internal SDK remain separately visible. Preserve full-SHA Actions references when updating them.
+
+Keep `@types/node` on Node 24 LTS: the npm entry ignores versions `>=25.0.0`, while all 24.x patch and minor updates remain eligible under the existing monitoring policy. Revisit this exclusion only after an explicitly approved runtime/toolchain major upgrade; a newer typings major alone is not adoption approval.
 
 All PRs already run the four-platform `quality-gate.yml` with a frozen install and `pnpm prepush:gate`. Monitoring adds no general check or developer command. Review the actual manifest/lockfile diff and retain the Node 24 type boundary, reviewed MCP v1 transports, Inspector development peer graph, exact internal SDK, compiler/package-manager pins and workspace install restrictions. The canonical gate includes packed-runtime and clean-worktree proof; do not weaken its transport, validation, auth or production-tree assertions to accept an update.
 
